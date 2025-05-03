@@ -28,8 +28,12 @@ jobs:
       - name: Publish the project
         run: dotnet publish --configuration Release --output ./publish
 
-      - name: Upload publish folder as an artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: published-app
-          path: ./publish
+      - name: Commit and push publish folder to repository
+        run: |
+          git config --global user.name "M-Talha-Jabbar"
+          git config --global user.email "muhammadtalha61940@gmail.com"
+          git add ./publish
+          git commit -m "Add published files"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
