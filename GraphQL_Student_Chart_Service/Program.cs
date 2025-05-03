@@ -107,6 +107,6 @@ app.UseAuthorization(); // This middleware enforces any policies you set and it'
 app.MapControllers();
 
 // Register GraphQL endpoint
-app.UseGraphQL<ISchema>("/graphql"); // URL to host GraphQL endpoint
+app.UseGraphQL<ISchema>("/graphql"); // URL to host GraphQL endpoints
 
 app.Run();
