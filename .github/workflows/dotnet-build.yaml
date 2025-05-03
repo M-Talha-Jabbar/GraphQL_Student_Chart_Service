@@ -27,3 +27,9 @@ jobs:
 
       - name: Publish the project
         run: dotnet publish --configuration Release --output ./publish
+
+      - name: Upload publish folder as an artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: published-app
+          path: ./publish
