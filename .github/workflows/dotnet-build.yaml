@@ -28,8 +28,8 @@ jobs:
 
       - name: Commit and push release folder to repository  # Step 5: Commit the changes and push them back to the repository (in this case, the ./Release folder)
         run: |  # The following are shell commands that will be executed on the runner.
-          git config --global user.name "M-Talha-Jabbar"  
-          git config --global user.email "muhammadtalha61940@gmail.com"  
+          git config --global user.name "${{ secrets.GIT_USER_NAME }}" # Added Secrets in GitHub Repo (Settings -> Secrets and variables -> Actions -> New repository secret)
+          git config --global user.email "${{ secrets.GIT_USER_EMAIL }}" 
           git add ./Release  
           git commit -m "Add published files"  
           git push 
