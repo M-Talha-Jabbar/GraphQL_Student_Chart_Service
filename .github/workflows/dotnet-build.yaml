@@ -18,7 +18,7 @@ jobs:
       - name: Set up .NET 6  # Step 2: Setup .NET SDK (required to build .NET projects)
         uses: actions/setup-dotnet@v4  # This action installs .NET on the GitHub runner.
         with:
-          dotnet-version: '6.0.x'  # Tells the setup action to install version 6 of .NET SDK, which is required to build and run your .NET projects.
+          dotnet-version: '6.0.x'  # Tells the setup action to install version 6 of .NET SDK, and 6.0.x means .NET 6 with the latest available patch version under the 6.0 release series.
 
       - name: Restore dependencies  # Step 3: Restore the NuGet dependencies for the project.
         run: dotnet restore  
