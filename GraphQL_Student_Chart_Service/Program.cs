@@ -89,15 +89,16 @@ var app = builder.Build();
 
 app.UseCors("GraphQL_Student_Chart_Client");
 
+Console.WriteLine($"Environment: {builder.Environment.EnvironmentName}");
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-
-    // add altair UI to development only
-    app.UseGraphQLAltair();
 }
+
+app.UseGraphQLAltair();
 
 app.UseHttpsRedirection();
 
