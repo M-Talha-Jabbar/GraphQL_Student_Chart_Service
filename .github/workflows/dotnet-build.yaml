@@ -1,16 +1,16 @@
-name: Build .NET Project
+name: Build .NET Project # Define the name of the workflow
 
 on:
   push:
     branches:
-      - main
+      - main # Trigger the workflow when code is pushed to the 'main' branch
 
 jobs:
-  dotnet-build:
+  dotnet-build: # This is the name of the job. Jobs can run in parallel or sequentially, and each job runs on a separate runner.
     name: Build .NET 6 Project
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest # Specifies the environment in which this job will run. In this case, the latest Ubuntu version available on GitHub Actions. You can use other environments like 'windows-latest' or 'macos-latest'.
 
-    steps:
+    steps: # A job consists of multiple steps. Steps are executed sequentially.
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -34,3 +34,42 @@ jobs:
           git push
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+name: Build .NET Project  # This is the name of the entire workflow.
+
+on:
+  push:
+    branches:
+      - main  # This event triggers the workflow when changes are pushed to the 'main' branch.
+
+jobs:
+  dotnet-build:  # This is the name of the job. Jobs can run in parallel or sequentially, and each job runs on a separate runner.
+    name: Build .NET 6 Project  # This is just a label to describe the job's task.
+    runs-on: ubuntu-latest  # Specifies the environment in which this job will run. In this case, the latest Ubuntu version available on GitHub Actions. You can use other environments like 'windows-latest' or 'macos-latest'.
+
+    steps:  # A job consists of multiple steps. Steps are executed sequentially.
+      
+      - name: Checkout code  # Step 1: Checkout the code from the repository.
+        uses: actions/checkout@v4  # This built-in action checks out your repository code into the GitHub runner so it can be accessed during the job.
+      
+      - name: Set up .NET 6  # Step 2: Setup .NET SDK (required to build .NET projects)
+        uses: actions/setup-dotnet@v4  # This action installs .NET on the GitHub runner.
+        with:
+          dotnet-version: '6.0.x'  # Tells the setup action to install version 6 of .NET SDK, which is required to build and run your .NET projects.
+
+      - name: Restore dependencies  # Step 3: Restore the NuGet dependencies for the project.
+        run: dotnet restore  
+
+      - name: Build the project  # Step 4: Build the project
+        run: dotnet build --configuration Release --output ./Release  # This compiles your application in Release mode (optimized for production), and the compiled files are placed in the './Release' directory.
+
+      - name: Commit and push release folder to repository  # Step 5: Commit the changes and push them back to the repository (in this case, the ./Release folder)
+        run: |  # The following are shell commands that will be executed on the runner.
+          git config --global user.name "M-Talha-Jabbar"  
+          git config --global user.email "muhammadtalha61940@gmail.com"  
+          git add ./Release  
+          git commit -m "Add published files"  
+          git push 
+
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # The GITHUB_TOKEN secret is used to authenticate with GitHub for pushing changes to the repository. It’s automatically created by GitHub for each workflow and is used for secure operations like pushing code.
