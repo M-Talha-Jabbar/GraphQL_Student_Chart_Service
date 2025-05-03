@@ -98,6 +98,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+// altair UI
 app.UseGraphQLAltair();
 
 app.UseHttpsRedirection();
