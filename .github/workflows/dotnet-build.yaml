@@ -22,17 +22,14 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore
 
-      # - name: Build the project
-      #   run: dotnet build --configuration Release
-
-      - name: Publish the project
-        run: dotnet publish --configuration Release --output ./publish
+      - name: Build the project
+        run: dotnet build --configuration Release --output ./Release
 
       - name: Commit and push publish folder to repository
         run: |
           git config --global user.name "M-Talha-Jabbar"
           git config --global user.email "muhammadtalha61940@gmail.com"
-          git add ./publish
+          git add ./Release
           git commit -m "Add published files"
           git push
         env:
